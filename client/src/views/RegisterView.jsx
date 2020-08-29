@@ -30,7 +30,7 @@ function Copyright() {
 	);
   }
 
-function LoginView(props) {
+function RegisterView(props) {
 
 
 	const { login } = useContext(AuthContext);
@@ -53,22 +53,10 @@ function LoginView(props) {
 
     const onPasswordChange = event => {
         setPassword(event.target.value);
-	}
-	
-	const postLogin = (e) => {
-		e.preventDefault();
-		login({email, password})
-			.then(success => {
-				if (success) {
-					history.push('/');
-				} else {
-					console.log('authentication failed');
-				}
-			})
-			.catch(error => {
-				
-				console.log('authentication failed catch ', error);
-			})
+    }
+    
+    const onPasswordConfirmChange = event => {
+        setPassword(event.target.value);
 	}
 
 	const classes = useStyles();
@@ -81,7 +69,7 @@ function LoginView(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Register
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -106,10 +94,18 @@ function LoginView(props) {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Confirm Password"
+            type="password"
+            id="passwordConfirm"
+            autoComplete="current-password"
           />
+          
           <Button
             type="submit"
             fullWidth
@@ -117,13 +113,13 @@ function LoginView(props) {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Register
           </Button>
           <Grid container>
             
             <Grid item>
-			<Link href="/register" variant="body2">
-                Don't have an account? Sign Up
+              <Link href="/login" variant="body2">
+                Already have an account? Sign In!
               </Link>
             </Grid>
           </Grid>
@@ -156,4 +152,4 @@ const useStyles = makeStyles((theme) => ({
 	},
   }));
 
-export default LoginView;
+export default RegisterView;

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {BrowserRouter} from 'react-router-dom';
-
 import MainRouter from './routes/MainRouter';
 import Auth from './context/AuthContext';
 

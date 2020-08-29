@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import Container from 'react-bootstrap/Container';
 import ReactLoading from 'react-loading';
 
 import { AuthContext } from '../context/AuthContext'
@@ -12,7 +11,6 @@ function PrivateRoute({ component: Component, ...otherProps }) {
 
     return (
         <>
-            <Container className='mt-5 pt-4'>
                 <Route
                     {...otherProps}
                     render={props => (
@@ -29,7 +27,6 @@ function PrivateRoute({ component: Component, ...otherProps }) {
                             <ReactLoading type={'spinningBubbles'} color={'black'} height={667} width={375}/>
                     )}
                 />
-            </Container>
         </>
     )
 }
