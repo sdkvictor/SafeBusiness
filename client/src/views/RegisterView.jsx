@@ -14,8 +14,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import {AuthContext} from '../context/AuthContext';
+import colors from '../constants/colors'
 
 function Copyright() {
 	return (
@@ -33,15 +33,38 @@ function Copyright() {
 function RegisterView(props) {
 
 
-	const { login } = useContext(AuthContext);
+	const { signUp } = useContext(AuthContext);
 	const history = useHistory();
 
+    const [firstName, setName] = useState("");
+    const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
-  	const [password, setPassword] = useState("");
+      const [password, setPassword] = useState("");
+      const [confirmPassword, setPasswordConfirm] = useState ("");
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
+
+  const postRegister= (e) => {
+    e.preventDefault();
+    
+    if (password !== confirmPassword) {
+        console.log('passwords dont match');
+        return;
+    }
+
+    signUp({firstName, lastName, email, password})
+        .then(result => {
+            if (result) {
+                history.push('/login');
+            } else {
+            console.log("rip");            }
+        })
+        .catch(error => {
+            console.log('authentication failed catch ', error);
+        })
+}
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -56,12 +79,21 @@ function RegisterView(props) {
     }
     
     const onPasswordConfirmChange = event => {
-        setPassword(event.target.value);
+        setPasswordConfirm(event.target.value);
+    }
+    
+    const onNameChange = event => {
+        setName(event.target.value);
+    }
+    
+    const onLastChange = event => {
+        setLastName(event.target.value);
 	}
 
 	const classes = useStyles();
 
   	return (
+      <div className = {classes.container}>
 		<Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -71,7 +103,32 @@ function RegisterView(props) {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={postRegister}>
+          
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="First Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            onChange={onNameChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label="Last Name"
+            name="lastname"
+            autoComplete="lastname"
+            autoFocus
+            onChange={onLastChange}
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -82,6 +139,7 @@ function RegisterView(props) {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={onEmailChange}
           />
           <TextField
             variant="outlined"
@@ -93,6 +151,7 @@ function RegisterView(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={onPasswordChange}
           />
           <TextField
             variant="outlined"
@@ -104,6 +163,7 @@ function RegisterView(props) {
             type="password"
             id="passwordConfirm"
             autoComplete="current-password"
+            onChange = {onPasswordConfirmChange}
           />
           
           <Button
@@ -112,6 +172,7 @@ function RegisterView(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
+
           >
             Register
           </Button>
@@ -129,6 +190,7 @@ function RegisterView(props) {
         <Copyright />
       </Box>
     </Container>
+    </div>
 	)
 }
 
@@ -149,7 +211,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 	submit: {
 	  margin: theme.spacing(3, 0, 2),
-	},
+  },
+  container:{
+    width: '100%',
+		height: '100%',
+		position: "fixed",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: colors.light
+  }
   }));
 
 export default RegisterView;

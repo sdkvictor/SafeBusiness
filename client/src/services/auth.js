@@ -27,7 +27,7 @@ export function checkIsAuthenticated() {
 } 
 
 export function authSignUp(credentials) {
-    let url = `${SERVER_URL}/users/create`;
+    let url = `${SERVER_URL}users/create`;
     let settings = {
         method: "POST",
         headers: {
@@ -36,7 +36,8 @@ export function authSignUp(credentials) {
         body: JSON.stringify({
             email: credentials.email,
             password: credentials.password,
-            name: credentials.name
+            firstName: credentials.firstName,
+            lastName: credentials.lastName
         })
     }
 

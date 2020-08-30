@@ -6,6 +6,8 @@ import colors from '../constants/colors'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import {AuthContext} from '../context/AuthContext'
 import {SERVER_URL} from '../config';
+import {useHistory} from 'react-router-dom';
+
 
 function AddBusiness(props) {
 
@@ -22,6 +24,7 @@ function AddBusiness(props) {
     const [businessId, setBusinessId] = useState("");
 
     const {user} = useContext(AuthContext);
+    const history = useHistory();
 
     
     const onBusinessNameChange = event => {
@@ -48,7 +51,7 @@ function AddBusiness(props) {
     }
 
     const getBusinessId = () =>{
-        let url = `${SERVER_URL}businesses/getBusinessByOwner/${user.id}`
+        let url = `${SERVER_URL}businesses/getByOwner/${user.id}`
         let settings = {
             method: "GET"
         }
@@ -69,7 +72,7 @@ function AddBusiness(props) {
     const createAll = (e) => {
         e.preventDefault();
         createBusiness();
-        createAreas();
+        history.push("/");
     }
     
     const createBusiness = () => {
@@ -79,7 +82,8 @@ function AddBusiness(props) {
             areas: numberOfTables,
             width: spaceX,
             height: spaceY,
-            owner: user.id
+            owner: user.id,
+            tableDimension: tableDiam
         }
         let url = `${SERVER_URL}businesses/create`
         let settings = {
@@ -94,7 +98,8 @@ function AddBusiness(props) {
                 height: newBusiness.height,
                 owner: newBusiness.owner,
                 safeDistance: minSocDistance,
-                capacity: maxCapAllowed
+                capacity: maxCapAllowed,
+                tableDimension: tableDiam
             })
         }
         return fetch(url, settings)
@@ -157,41 +162,39 @@ function AddBusiness(props) {
       <form onSubmit={createAll}>
         <p className="h3 text-center mb-4">Add Business</p>
         <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-          Business's name
+        <div style={styles.text}>Business's name</div>
         </label>
         <input type="text" id="defaultFormRegisterNameEx" className="form-control" onChange={onBusinessNameChange}/>
         <br />
         <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
-          Space's x dimension
+        <div style={styles.text}> Space's x dimension </div>
         </label>
         <input type="number" id="defaultFormRegisterEmailEx" className="form-control" onChange={onSpaceXChange}/>
         <br />
         <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
-          Space's y dimension
+        <div style={styles.text}>Space's y dimension</div>
         </label>
-        <input type="number" id="defaultFormRegisterConfirmEx" className="form-control" />
+        <input type="number" id="defaultFormRegisterConfirmEx" className="form-control" onChange={onSpaceYChange}/>
         <br />
         <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
-          Number of tables available
+        <div style={styles.text}>Number of tables available</div>
         </label>
-        <input type="number" id="defaultFormRegisterPasswordEx" className="form-control" />
+        <input type="number" id="defaultFormRegisterPasswordEx" className="form-control" onChange={onChangeOfNumTab} />
         <br />
         <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
-          Table's diameter (meters)
+        <div style={styles.text}> Table's diameter (meters)</div>
         </label>
-        <input type="number" id="defaultFormRegisterConfirmEx" className="form-control" />
-        <br />
-        
+        <input type="number" id="defaultFormRegisterConfirmEx" className="form-control" onChange={onTableDiameterChange}/>
         <br />
         <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
-          Minimum social distance (meters)
+        <div style={styles.text}> Minimum social distance (meters)</div>
         </label>
-        <input type="number" id="defaultFormRegisterConfirmEx" className="form-control" />
+        <input type="number" step="any" id="defaultFormRegisterConfirmEx" className="form-control" onChange={onMinSocDistanceChange}/>
         <br />
         <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
-          Maximum capacity allowed
+        <div style={styles.text}> Maximum capacity allowed</div>
         </label>
-        <input type="number" id="defaultFormRegisterConfirmEx" className="form-control" />
+        <input type="number"  id="defaultFormRegisterConfirmEx" className="form-control" onChange={onMaxCapAllowedChange}/>
         <div className="text-center mt-4">
           <MDBBtn style={styles.button} type="submit">
             Confirm
@@ -229,7 +232,8 @@ const styles = {
     },
     button: {
         color: "white",
-        backgroundColor: colors.secondary
+        backgroundColor: colors.secondary,
+        fontWeight:'bold'
     },
     image :{
         width: '128px',
@@ -260,6 +264,10 @@ const styles = {
         alignItems: "center",
         cursor: 'pointer'
     },
+    text: { 
+        fontWeight: 'bold'
+
+    }
 }
 
 export default AddBusiness

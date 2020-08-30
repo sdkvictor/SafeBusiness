@@ -9,6 +9,7 @@ let businessCollection = mongoose.Schema({
     height: {type: Number},
     safeDistance: {type: Number},
     capacity: {type: Number},
+    tableDimension: {type:Number},
     owner: {
         type: mongoose.Schema.Types.ObjectId, 
         ref:'users'

@@ -46,7 +46,7 @@ router.get('/:id', jsonParser, (req, res) => {
 
 
 router.get('/getByOwner/:id', (req, res) => {
-    let id = req.params.owner;
+    let id = req.params.id;
 
     if (id == undefined) {
         res.statusMessage = "Owner id not provided";
@@ -122,13 +122,14 @@ router.post('/create', jsonParser, (req, res) => {
     let safeDistance = req.body.safeDistance;
     let capacity = req.body.capacity;
     let owner = req.body.owner;
+    let tableDimension = req.body.tableDimension;
 
-    if (name == undefined || areas == undefined || width == undefined || height == undefined || safeDistance == undefined || capacity == undefined || owner == undefined) {
+    if (name == undefined || tableDimension == undefined || areas == undefined || width == undefined || height == undefined || safeDistance == undefined || capacity == undefined || owner == undefined) {
         res.statusMessage = "Parameters to create business incomplete";
     	return res.status(406).send();
     }
 
-    let newBusiness = {name, areas, width, height, safeDistance, capacity, owner};
+    let newBusiness = {name, areas, width, height, safeDistance, capacity, owner, tableDimension};
 
     BusinessController.getByName(name)
         .then(business => {
