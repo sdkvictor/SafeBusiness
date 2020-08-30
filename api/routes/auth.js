@@ -8,7 +8,7 @@ let bcrypt = require('bcrypt');
 
 let {UserController} = require('../models/user');
 let ServerError = require('../error');
-let {SECRET} = require('../../client/src/config');
+//let {SECRET} = require('../../client/src/config');
 
 let foundUser;
 

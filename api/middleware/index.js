@@ -1,5 +1,5 @@
 let jwt = require('jsonwebtoken');
-let {SECRET} = require('../../client/src/config');
+//let {SECRET} = require('../../client/src/config');
 
 middleware = {
     isLoggedIn: function(req, res, next) {
