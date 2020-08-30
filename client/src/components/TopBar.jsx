@@ -2,7 +2,6 @@ import React from 'react';
 
 class TopBarMenu extends Component {
     render(){
-
         return(
             <div>
                 <nav class="navbar navbar-dark bg-dark">
