@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import colors from '../constants/colors'
 
 import {AuthContext} from '../context/AuthContext';
 
@@ -48,7 +49,7 @@ function LoginView(props) {
   }
 	
     const onEmailChange = event => {
-        setEmail(event.target.value);
+		setEmail(event.target.value);
     }
 
     const onPasswordChange = event => {
@@ -57,6 +58,8 @@ function LoginView(props) {
 	
 	const postLogin = (e) => {
 		e.preventDefault();
+		console.log(email);
+		console.log(password);
 		login({email, password})
 			.then(success => {
 				if (success) {
@@ -74,7 +77,8 @@ function LoginView(props) {
 	const classes = useStyles();
 
   	return (
-		<Container component="main" maxWidth="xs">
+		  <div className={classes.container}>
+		<Container component="main" maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -83,7 +87,7 @@ function LoginView(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={postLogin}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -93,7 +97,8 @@ function LoginView(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
+			autoFocus
+			onChange={onEmailChange}
           />
           <TextField
             variant="outlined"
@@ -104,7 +109,8 @@ function LoginView(props) {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+			autoComplete="current-password"
+			onChange={onPasswordChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -133,6 +139,7 @@ function LoginView(props) {
         <Copyright />
       </Box>
     </Container>
+	</div>
 	)
 }
 
@@ -154,6 +161,15 @@ const useStyles = makeStyles((theme) => ({
 	submit: {
 	  margin: theme.spacing(3, 0, 2),
 	},
+	container: {
+		width: '100%',
+		height: '100%',
+		position: "fixed",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: colors.light
+	}
   }));
 
 export default LoginView;

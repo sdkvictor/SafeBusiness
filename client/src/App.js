@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import MainRouter from './routes/MainRouter';
 import Auth from './context/AuthContext';
+import colors from './constants/colors'
 
 function App() {
 
@@ -28,6 +29,7 @@ const styles = {
 	container: {
 		width: '100%',
 		height: '100%',
+		
 	},
 };
 

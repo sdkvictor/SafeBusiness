@@ -4,7 +4,7 @@ export function checkIsAuthenticated() {
     let token = localStorage.getItem('token');
     var authenticated = false;
 
-    let url = `${SERVER_URL}/api/validate/${token}`
+    let url = `${SERVER_URL}validate/${token}`
     let settings = {
         method: "GET"
     }
@@ -27,7 +27,7 @@ export function checkIsAuthenticated() {
 } 
 
 export function authSignUp(credentials) {
-    let url = `${SERVER_URL}/api/users/create`;
+    let url = `${SERVER_URL}/users/create`;
     let settings = {
         method: "POST",
         headers: {
@@ -54,7 +54,7 @@ export function authSignUp(credentials) {
 }
 
 export function authLogin(credentials) {
-    let url = `${SERVER_URL}/api/login`
+    let url = `${SERVER_URL}auth/login`
     let settings = {
         method: "POST",
         headers: {

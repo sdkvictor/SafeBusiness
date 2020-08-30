@@ -7,6 +7,8 @@ let businessCollection = mongoose.Schema({
     areas: {type: Number},
     width: {type: Number},
     height: {type: Number},
+    safeDistance: {type: Number},
+    capacity: {type: Number},
     owner: {
         type: mongoose.Schema.Types.ObjectId, 
         ref:'users'
@@ -71,7 +73,7 @@ let BusinessController = {
             })
     },
     delete: function(id) {
-        return User.findByIdAndRemove(id)
+        return Business.findByIdAndRemove(id)
             .then(rb => {
                 return rb;
             })

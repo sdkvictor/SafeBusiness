@@ -68,13 +68,14 @@ router.get('/email', jsonParser, (req, res) => {
 
 // Create a user.
 router.post('/create', jsonParser, (req, res) => {
-  	let name, email, password;
+  	let firstName, lastName, email, password;
 
-  	name = req.body.name;
+    firstName = req.body.firstName;
+    lastName = req.body.lastName;
   	email = req.body.email;
   	password = req.body.password;
 
-  	if (name == undefined || email == undefined || password == undefined) {
+  	if (firstName == undefined || email == undefined || password == undefined || lastName == undefined) {
     	res.statusMessage = "Parameters to create user incomplete";
     	return res.status(406).send();
 	  }
@@ -90,7 +91,8 @@ router.post('/create', jsonParser, (req, res) => {
         .then(hash => {
             console.log(hash)
             return UserController.create({
-                name: name,
+                firstName: firstName,
+                lastName: lastName,
                 email: email,
                 password: hash
             });
@@ -108,14 +110,14 @@ router.post('/create', jsonParser, (req, res) => {
                 return res.status(500).send();
             }
         });
-})
+});
 
 // Update a user.
 router.put('/update/:id', jsonParser, middleware.isLoggedIn, async (req, res) => {
     let id = req.params.id;
 
     if (id == undefined) {
-        res.statusMessage = "No id given to update a user";
+        res.statusMessage = "No ID given to update a user";
         return res.status(406).send();
     }
 
@@ -135,7 +137,7 @@ router.put('/update/:id', jsonParser, middleware.isLoggedIn, async (req, res) =>
             let newUser = {};
 
             if (name != undefined) {
-                newUser.name = name
+                newUser.name = name;
             }
 
             if (email != undefined) {
@@ -150,7 +152,7 @@ router.put('/update/:id', jsonParser, middleware.isLoggedIn, async (req, res) =>
         .catch(error => {
             console.log(error);
             if (error.code === 404) {
-                res.statusMessage = "User not found with given id";
+                res.statusMessage = "User not found with given ID";
                 return res.status(404).send();
             } else {
                 res.statusMessage = "Database error";
@@ -164,7 +166,7 @@ router.delete('/delete/:id', jsonParser, middleware.isLoggedIn, (req, res) => {
     let id = req.params.id;
     
     if (id == undefined) {
-        res.statusMessage = "No ID given to delete";
+        res.statusMessage = "No ID given to delete a user";
         return res.status(406).send();
     }
 
@@ -182,7 +184,7 @@ router.delete('/delete/:id', jsonParser, middleware.isLoggedIn, (req, res) => {
         .catch(error => {
             console.log(error);
             if (error.code === 404) {
-                res.statusMessage = "User not found with given id";
+                res.statusMessage = "User not found with given ID";
                 return res.status(404).send();
             } else {
                 res.statusMessage = "Database error";

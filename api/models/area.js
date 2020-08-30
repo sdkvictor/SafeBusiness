@@ -7,7 +7,11 @@ let areaCollection = mongoose.Schema({
     width: {type: Number},
     height: {type: Number},
     isReserved: {type: Boolean},
-    isUsable: {type: Boolean}
+    isUsable: {type: Boolean},
+    business: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref:'businesses'
+    }
 });
 
 let Area = mongoose.model('areas', areaCollection);
