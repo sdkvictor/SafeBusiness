@@ -5,7 +5,6 @@ function HomeView(props) {
 
     return (
         <div>
-            <TopBarMenu/>
            <h3 style={styles.textH3}> No existen negocios, crea uno para empezar a configurar </h3>
            <button><img src = "./client/src/assets/mas.png" style={styles.image}/></button>
         </div>
